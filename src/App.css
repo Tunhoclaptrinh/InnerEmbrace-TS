@@ -30,3 +30,103 @@ label {
   -webkit-border-radius: 50%;
   border-radius: 50%;
 }
+
+.network-error-banner {
+  position: fixed;
+  top: 80px; /* Điều chỉnh để hiển thị dưới header */
+  left: 0;
+  right: 0;
+  background-color: #ff4444;
+  color: white;
+  padding: 12px 20px;
+  text-align: center;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.network-error-banner button {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 0 5px;
+}
+
+.network-error-banner button:hover {
+  opacity: 0.8;
+}
+
+:root {
+  --primary-color: #93252a;
+  --secondary-color: #051a53;
+  --accent-color: rgba(243, 143, 148, 1);
+  --text-color: #666;
+  --white: #fff;
+  --gradient-primary: linear-gradient(
+    to right,
+    rgba(147, 37, 42, 1),
+    rgba(255, 92, 99, 1)
+  );
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  background-color: #fff;
+}
+
+:root {
+  --primary-color: #93252a;
+  --secondary-color: #051a53;
+  --accent-color: rgba(243, 143, 148, 1);
+  --text-color: #666;
+  --white: #fff;
+  --gradient-primary: linear-gradient(
+    to right,
+    rgba(147, 37, 42, 1),
+    rgba(255, 92, 99, 1)
+  );
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  background-color: #fff;
+}
+
+/* Reset Bootstrap hover styles */
+a:hover {
+  text-decoration: none !important;
+}
+
+.btn:hover {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Your custom styles */
+.content-wrapper {
+  margin-top: 76px;
+}

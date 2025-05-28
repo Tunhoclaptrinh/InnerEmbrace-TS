@@ -1,0 +1,301 @@
+/* CSS Variables - scoped to about page */
+.about-page {
+  --about-primary-color: #93252a;
+  --about-secondary-color: #051a53;
+  --about-accent-color: rgba(243, 143, 148, 1);
+  --about-text-color: #666;
+  --about-white: #fff;
+  --about-gradient-primary: linear-gradient(
+    to right,
+    rgba(147, 37, 42, 1),
+    rgba(255, 92, 99, 1)
+  );
+}
+
+/* Base Styles - scoped to about page */
+.about-page {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin-top: 76px; /* Account for fixed header */
+  min-height: 100vh;
+  background-color: #fff;
+}
+
+/* Hero Section */
+.about-page .about-hero {
+  display: flex;
+  background-color: var(--about-accent-color);
+  padding: 30px 5%;
+  position: relative;
+  overflow: hidden;
+  min-height: 300px;
+  border-radius: 30px;
+  margin: 0 40px;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.about-page .about-hero-content-container {
+  width: 100%;
+  z-index: 3;
+  height: 450px;
+  display: flex;
+}
+
+.about-page .about-hero-image {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  z-index: 1;
+  border: 8px solid rgba(249, 239, 228, 1);
+  border-radius: 28px;
+}
+
+/* Connection and Story Section */
+.about-page .about-connection-and-story {
+  position: relative;
+}
+
+.about-page .about-connection-and-story-container {
+  position: relative;
+}
+
+.about-page .about-connection-and-story-container::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.3;
+  z-index: -1;
+}
+
+/* Story Section */
+.about-page .about-story {
+  padding: 0 0 4px 0;
+  text-align: center;
+  position: relative;
+  padding-bottom: 50px;
+  margin-top: 40px;
+}
+
+.about-page .about-story::before {
+  content: "";
+  display: block;
+  width: 98px;
+  height: 68px;
+  background-image: url("../../assets/img/purple-pointer.png");
+  position: absolute;
+  top: 175px;
+  left: 115px;
+}
+
+.about-page .about-story::after {
+  content: "";
+  display: block;
+  width: 190px;
+  height: 122px;
+  background-image: url("../../assets/img/leaf.png");
+  position: absolute;
+  top: 50px;
+  right: 54px;
+}
+
+.about-page .about-story-heading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--about-primary-color);
+  font-size: 4.8rem;
+  margin-bottom: 20px;
+}
+
+.about-page .about-logo-story {
+  height: 50px;
+  margin-right: 16px;
+}
+
+.about-page .about-logo-story-text {
+  font-size: 4.8rem;
+  margin-bottom: 0;
+}
+
+.about-page .about-story-paragraph {
+  font-size: 1.6rem;
+  text-align: center;
+}
+
+.about-page .about-story-text {
+  color: var(--about-secondary-color);
+  line-height: 27px;
+  font-size: 1.6rem;
+  margin-bottom: 15px;
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 15px;
+  vertical-align: middle;
+  font-weight: 600;
+  margin-top: 32px;
+}
+
+/* Newsletter Section */
+.about-page .about-newsletter-container {
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 254, 1),
+    rgba(252, 243, 241, 1)
+  );
+  position: relative;
+  z-index: 1;
+}
+
+.about-page .about-newsletter-container::after {
+  content: "";
+  height: 100%;
+  background-image: url("../img/grid2.png");
+  border-radius: 16px;
+  margin: auto;
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-size: cover;
+  opacity: 0.6;
+}
+
+.about-page .about-newsletter {
+  padding: 30px 5%;
+  text-align: center;
+  margin: auto;
+}
+
+.about-page .about-newsletter-heading {
+  color: rgba(0, 102, 255, 1);
+  font-size: 4.8rem;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.about-page .about-cta-leaf {
+  height: 30px;
+  margin-right: 10px;
+}
+
+.about-page .about-newsletter-text {
+  margin-bottom: 30px;
+  color: var(--about-secondary-color);
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  line-height: 27px;
+  font-weight: 500;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Button Styles - scoped to about page */
+.about-page .about-btn {
+  padding: 10px 16px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.about-page .about-btn-primary {
+  background: var(--about-gradient-primary);
+  color: white;
+  border: none;
+}
+
+.about-page .about-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(147, 37, 42, 0.3);
+}
+
+.about-page .about-newsletter-btn {
+  margin-top: 28px;
+  font-size: 1.5rem;
+  height: 44px;
+  width: fit-content;
+  border: none;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .about-page {
+    margin-top: 60px;
+  }
+
+  .about-page .about-hero {
+    margin: 0 20px;
+    margin-top: 10px;
+    padding: 20px 3%;
+    min-height: 200px;
+  }
+
+  .about-page .about-hero-content-container {
+    height: 300px;
+  }
+
+  .about-page .about-story-heading,
+  .about-page .about-newsletter-heading {
+    font-size: 3.2rem;
+  }
+
+  .about-page .about-logo-story-text {
+    font-size: 3.2rem;
+  }
+
+  .about-page .about-story::before,
+  .about-page .about-story::after {
+    display: none;
+  }
+
+  .about-page .about-story-text,
+  .about-page .about-newsletter-text {
+    font-size: 1.4rem;
+    padding: 0 10px;
+  }
+
+  .about-page .about-newsletter {
+    padding: 20px 3%;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-page .about-hero {
+    margin: 0 10px;
+    padding: 15px 2%;
+  }
+
+  .about-page .about-story-heading,
+  .about-page .about-newsletter-heading {
+    font-size: 2.4rem;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .about-page .about-logo-story {
+    height: 40px;
+    margin-right: 0;
+  }
+
+  .about-page .about-logo-story-text {
+    font-size: 2.4rem;
+  }
+
+  .about-page .about-cta-leaf {
+    height: 25px;
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+}

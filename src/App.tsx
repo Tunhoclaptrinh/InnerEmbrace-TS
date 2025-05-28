@@ -1,38 +1,44 @@
-import React from "react";
-import { useState, useEffect } from "react";
-import { Routes, Route, Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
 import * as AuthService from "./services/auth.service";
-import IUser from './types/user.type';
+import IUser from "./types/user.type";
+import routes, { RouteConfig } from "./routes/routes";
 
-import Login from "./components/Login";
-import Register from "./components/Register";
-import Home from "./components/Home";
-import Profile from "./components/Profile";
-import BoardUser from "./components/BoardUser";
-import BoardModerator from "./components/BoardModerator";
-import BoardAdmin from "./components/BoardAdmin";
-
+import Header from "./components/Header";
+import HeaderLoggedIn from "./components/Header/HeaderLoggedIn";
+import Footer from "./components/Footer";
 import EventBus from "./common/EventBus";
+import { ChatProvider } from "./contexts/ChatContext";
 
 const App: React.FC = () => {
-  const [showModeratorBoard, setShowModeratorBoard] = useState<boolean>(false);
-  const [showAdminBoard, setShowAdminBoard] = useState<boolean>(false);
   const [currentUser, setCurrentUser] = useState<IUser | undefined>(undefined);
+  const [isLoading, setIsLoading] = useState(true);
+  const [networkError, setNetworkError] = useState<string>("");
+  const location = useLocation();
+
+  console.log("🔍 DEBUG - Current user:", currentUser);
+  console.log("🔍 DEBUG - Current path:", location.pathname);
+  console.log("🔍 DEBUG - Is loading:", isLoading);
 
   useEffect(() => {
-    const user = AuthService.getCurrentUser();
+    const checkUser = async () => {
+      try {
+        const user = AuthService.getCurrentUser();
+        console.log("🔍 DEBUG - User from localStorage:", user);
+        setCurrentUser(user || undefined);
+      } catch (error) {
+        console.error("🔍 DEBUG - Auth error:", error);
+        setNetworkError("Không thể kết nối đến server. Vui lòng thử lại sau!");
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-    if (user) {
-      setCurrentUser(user);
-      setShowModeratorBoard(user.roles.includes("ROLE_MODERATOR"));
-      setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
-    }
-
+    checkUser();
     EventBus.on("logout", logOut);
-
     return () => {
       EventBus.remove("logout", logOut);
     };
@@ -40,92 +46,149 @@ const App: React.FC = () => {
 
   const logOut = () => {
     AuthService.logout();
-    setShowModeratorBoard(false);
-    setShowAdminBoard(false);
     setCurrentUser(undefined);
   };
 
+  const shouldShowHeader = () => {
+    const authPages = ["/login", "/register"];
+    const chatPages = ["/chat/map", "/chat/imaginary", "/chat/portal"];
+    return (
+      !authPages.includes(location.pathname) &&
+      !chatPages.includes(location.pathname)
+    );
+  };
+
+  const getContainerClassName = (pathname: string): string => {
+    const publicPaths = [
+      "/",
+      "/home",
+      "/about",
+      "/podcasts",
+      "/blogs",
+      "/my-home",
+    ];
+
+    if (
+      publicPaths.includes(pathname) ||
+      pathname.startsWith("/podcast/") ||
+      pathname.startsWith("/blog/") ||
+      pathname.startsWith("/chat/")
+    ) {
+      return "";
+    }
+
+    return !shouldShowHeader() ? "" : "container mt-3";
+  };
+
+  // Component bảo vệ route private
+  const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
+    console.log("🔍 DEBUG - PrivateRoute check - currentUser:", currentUser);
+
+    if (isLoading) {
+      return <div>Loading...</div>; // Hoặc component loading của bạn
+    }
+
+    if (!currentUser) {
+      console.log("🔍 DEBUG - PrivateRoute - Redirecting to /login");
+      return <Navigate to="/login" replace />;
+    }
+
+    return <>{children}</>;
+  };
+
+  // Component bảo vệ route public (chỉ cho user chưa đăng nhập)
+  const PublicRoute = ({ children }: { children: React.ReactNode }) => {
+    console.log("🔍 DEBUG - PublicRoute check - currentUser:", currentUser);
+
+    if (isLoading) {
+      return <div>Loading...</div>;
+    }
+
+    // Nếu đã đăng nhập và đang ở trang home, redirect về my-home
+    if (
+      currentUser &&
+      (location.pathname === "/" || location.pathname === "/home")
+    ) {
+      console.log("🔍 DEBUG - PublicRoute - Redirecting to /my-home");
+      return <Navigate to="/my-home" replace />;
+    }
+
+    return <>{children}</>;
+  };
+
+  const renderRouteElement = (route: RouteConfig) => {
+    const Component = route.element;
+    console.log(
+      `🔍 DEBUG - Rendering route: ${route.path}, layout: ${route.layout}, requiresAuth: ${route.requiresAuth}`
+    );
+
+    // Xử lý homepage logic
+    if (route.isHomePage) {
+      return (
+        <PublicRoute>
+          <Component />
+        </PublicRoute>
+      );
+    }
+
+    // Xử lý routes yêu cầu authentication
+    if (route.requiresAuth) {
+      return (
+        <PrivateRoute>
+          <Component />
+        </PrivateRoute>
+      );
+    }
+
+    // Routes public khác
+    return <Component />;
+  };
+
+  // Hiển thị loading khi đang check auth
+  if (isLoading) {
+    return <div>Loading...</div>; // Thay bằng component loading đẹp hơn
+  }
+
   return (
-    <div>
-      <nav className="navbar navbar-expand navbar-dark bg-dark">
-        <Link to={"/"} className="navbar-brand">
-          bezKoder
-        </Link>
-        <div className="navbar-nav mr-auto">
-          <li className="nav-item">
-            <Link to={"/home"} className="nav-link">
-              Home
-            </Link>
-          </li>
+    <ChatProvider>
+      <div>
+        {shouldShowHeader() && (currentUser ? <HeaderLoggedIn /> : <Header />)}
 
-          {showModeratorBoard && (
-            <li className="nav-item">
-              <Link to={"/mod"} className="nav-link">
-                Moderator Board
-              </Link>
-            </li>
+        <div className="content-wrapper">
+          {networkError && (
+            <div className="network-error-banner">
+              <span>{networkError}</span>
+              <button onClick={() => setNetworkError("")}>✕</button>
+            </div>
           )}
 
-          {showAdminBoard && (
-            <li className="nav-item">
-              <Link to={"/admin"} className="nav-link">
-                Admin Board
-              </Link>
-            </li>
-          )}
-
-          {currentUser && (
-            <li className="nav-item">
-              <Link to={"/user"} className="nav-link">
-                User
-              </Link>
-            </li>
-          )}
+          <div className={getContainerClassName(location.pathname)}>
+            <Routes>
+              {routes.map((route) => (
+                <Route
+                  key={route.path}
+                  path={route.path}
+                  element={renderRouteElement(route)}
+                />
+              ))}
+              {/* Fallback routes */}
+              <Route
+                path="*"
+                element={
+                  currentUser ? (
+                    <Navigate to="/my-home" replace />
+                  ) : (
+                    <Navigate to="/" replace />
+                  )
+                }
+              />
+            </Routes>
+          </div>
         </div>
 
-        {currentUser ? (
-          <div className="navbar-nav ml-auto">
-            <li className="nav-item">
-              <Link to={"/profile"} className="nav-link">
-                {currentUser.username}
-              </Link>
-            </li>
-            <li className="nav-item">
-              <a href="/login" className="nav-link" onClick={logOut}>
-                LogOut
-              </a>
-            </li>
-          </div>
-        ) : (
-          <div className="navbar-nav ml-auto">
-            <li className="nav-item">
-              <Link to={"/login"} className="nav-link">
-                Login
-              </Link>
-            </li>
-
-            <li className="nav-item">
-              <Link to={"/register"} className="nav-link">
-                Sign Up
-              </Link>
-            </li>
-          </div>
-        )}
-      </nav>
-
-      <div className="container mt-3">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/user" element={<BoardUser />} />
-          <Route path="/mod" element={<BoardModerator />} />
-          <Route path="/admin" element={<BoardAdmin />} />
-        </Routes>
+        {shouldShowHeader() && <Footer />}
       </div>
-    </div>
+    </ChatProvider>
   );
 };
 

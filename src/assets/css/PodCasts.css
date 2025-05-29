@@ -28,7 +28,7 @@
    ============================================ */
 
 .podcasts-page__main-content {
-  padding-top: 92px; /* Account for fixed header */
+  /* padding-top: 92px; */
 }
 
 .podcasts-page__section {
@@ -44,9 +44,12 @@
    ============================================ */
 
 .podcasts-page__intro-container {
-  padding: 0 320px;
+  /* padding: 0 320px; */
+  width: 100%;
+  padding: 30px;
+  margin: -30px;
   text-align: center;
-  margin-bottom: 40px;
+  background-color: #fff4ea;
 }
 
 .podcasts-page__section-heading {

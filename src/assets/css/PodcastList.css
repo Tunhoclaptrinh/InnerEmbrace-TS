@@ -30,7 +30,6 @@
    ============================================ */
 
 .podcast-list__main-content {
-  padding-top: 76px; /* Account for fixed header */
   min-height: calc(100vh - 92px);
 }
 

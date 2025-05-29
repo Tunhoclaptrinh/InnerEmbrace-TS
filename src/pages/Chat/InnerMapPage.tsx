@@ -8,7 +8,6 @@ import ChatArea from "./components/ChatArea";
 import InputArea from "./components/InputArea";
 import * as chatService from "../../services/chat.service";
 import "../../assets/css/Chat.css";
-import { useNavigate } from "react-router-dom";
 
 export const InnerMapPage: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -17,18 +16,10 @@ export const InnerMapPage: React.FC = () => {
   const chatAreaRef = useRef<HTMLDivElement>(null);
   const { currentUser } = useAuth();
   const { setActiveMode, currentSession, setCurrentSession } = useChat();
-  const navigate = useNavigate();
 
   useEffect(() => {
     setActiveMode("map");
   }, [setActiveMode]);
-
-  // XÓA ĐOẠN CODE NÀY - đã được xử lý ở App.tsx
-  // useEffect(() => {
-  //   if (!currentUser) {
-  //     navigate("/login");
-  //   }
-  // }, [currentUser, navigate]);
 
   const startNewSession = async () => {
     try {
@@ -98,11 +89,6 @@ export const InnerMapPage: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleLogout = () => {
-    // AuthService.logout();
-    navigate("/login");
   };
 
   const userEmail = currentUser?.email || "User";

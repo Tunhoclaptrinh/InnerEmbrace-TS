@@ -57,14 +57,17 @@ const HeaderLoggedIn: React.FC = () => {
       <nav>
         <ul>
           <li>
-            <Link to="/" className={isActiveRoute("/") ? "nav--active" : ""}>
+            <Link
+              to="/my-home"
+              className={isActiveRoute("my-home") ? "nav--active" : ""}
+            >
               Trang chủ
             </Link>
           </li>
           <li>
             <Link
               to="/about"
-              className={isActiveRoute("/about") ? "nav--active" : ""}
+              // className={isActiveRoute("/about") ? "nav--active" : ""}
             >
               Khám phá khóa học
             </Link>
@@ -72,7 +75,7 @@ const HeaderLoggedIn: React.FC = () => {
           <li>
             <Link
               to="/my-courses"
-              className={isActiveRoute("/my-courses") ? "nav--active" : ""}
+              // className={isActiveRoute("/my-courses") ? "nav--active" : ""}
             >
               Khóa học của tôi
             </Link>
@@ -80,7 +83,7 @@ const HeaderLoggedIn: React.FC = () => {
           <li>
             <Link
               to="/podcasts"
-              className={isActiveRoute("/podcast") ? "nav--active" : ""}
+              // className={isActiveRoute("/podcast") ? "nav--active" : ""}
             >
               Nâng cấp gói AI Chat
             </Link>
@@ -105,11 +108,10 @@ const HeaderLoggedIn: React.FC = () => {
               src={avatarIcon}
               alt="User Avatar"
               className="header-icon avatar"
-              onClick={handleLogout}
             />
-            {isDropdownOpen && (
-              <div className="dropdown-menu">
-                <Link to="/profile" className="dropdown-item">
+            {/* {isDropdownOpen && ( */}
+            <>
+              {/* <Link to="/profile" className="dropdown-item">
                   <i className="fas fa-user"></i>
                   Trang cá nhân
                 </Link>
@@ -117,13 +119,13 @@ const HeaderLoggedIn: React.FC = () => {
                   <i className="fas fa-cog"></i>
                   Cài đặt
                 </Link>
-                <div className="dropdown-divider"></div>
-                <button onClick={handleLogout} className="dropdown-item logout">
-                  <i className="fas fa-sign-out-alt"></i>
-                  Đăng xuất
-                </button>
-              </div>
-            )}
+                <div className="dropdown-divider"></div> */}
+              <button onClick={handleLogout} className="dropdown-item logout">
+                <i className="fas fa-sign-out-alt"></i>
+                Đăng xuất
+              </button>
+            </>
+            {/* )} */}
           </div>
         </div>
       </div>

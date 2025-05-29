@@ -5,6 +5,7 @@ import ctaLeaf from "../../assets/img/cta-leaf.png";
 import InnerMap from "../../assets/img/innermap.png";
 import Imaginary from "../../assets/img/ImaginaryCoaching.png";
 import Portal from "../../assets/img/PossibilityPortal.png";
+import HeroImage from "../../assets/img/image-hero.png";
 
 const LoggedInHomePage: React.FC = () => {
   const navigate = useNavigate();

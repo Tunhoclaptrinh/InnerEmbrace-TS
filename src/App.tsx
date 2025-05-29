@@ -23,6 +23,11 @@ const App: React.FC = () => {
   console.log("🔍 DEBUG - Current path:", location.pathname);
   console.log("🔍 DEBUG - Is loading:", isLoading);
 
+  // Scroll to top when route changes
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
   useEffect(() => {
     const checkUser = async () => {
       try {

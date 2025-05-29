@@ -3,6 +3,7 @@ import "../../assets/css/About.css";
 import heroImage from "../../assets/img/image2.jpg";
 import logoStory from "../../assets/img/logo-story.png";
 import ctaLeaf from "../../assets/img/cta-leaf.png";
+import cauchuyen from "../../assets/img/cauchuyen.png";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 
@@ -20,64 +21,81 @@ const AboutPage: React.FC = () => {
 
   return (
     <div className="about-page">
-      {/* Hero Section */}
-      <section className="about-hero">
-        <div className="about-hero-content-container"></div>
-        <div
-          className="about-hero-image"
-          style={{ backgroundImage: `url(${heroImage})` }}
-        ></div>
-      </section>
-
       {/* Story Section */}
       <section className="about-connection-and-story">
         <div className="about-connection-and-story-container">
           <div className="about-story">
             <h2 className="about-story-heading">
+              <span className="about-logo-story-text">Câu chuyện của '</span>
               <img
                 className="about-logo-story"
                 src={logoStory}
                 alt="Logo Icon"
               />
-              <span className="about-logo-story-text">Story</span>
             </h2>
-            <div className="about-story-paragraph">
-              <p className="about-story-text">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-                egestas arcu ultricies, pulvinar lacus at, ullamcorper dolor.
-                Nullam efficitur imperdiet velit. Etiam id pellentesque lorem.
-                Aliquam erat volutpat. Etiam tellus felis, facilisis maximus
-                dapibus ligula imperdiet malesuada feugiat.
-              </p>
-              <p className="about-story-text">
-                Duis at magna sit amet turpis luctus bibendum. Sed non nibh
-                venenatis tellus lacinia ultrices et at nisl. Quisque malesuada,
-                dolor et hendrerit luctus, elit sem convallis dolor, a
-                condimentum ante ante a lacus.
+            <div className="story__paragraph p-content">
+              <p>
+                Inner Embrace sinh ra cho những người không còn muốn sống theo
+                lộ trình có sẵn. Họ không cần ai chỉ đường. <br /> Họ chỉ đang
+                chờ một không gian đủ yên để có thể lắng nghe sự sống động trong
+                chính con người mình — và rồi hành động từ đó. <br /> Chúng mình
+                không dạy bạn thế nào là sống là chính mình. Chúng mình ở đây để
+                giữ cho bạn một khoảng trống — nơi cái đẹp độc bản trong bạn có
+                thể bung nở tự nhiên.
               </p>
             </div>
           </div>
         </div>
       </section>
 
+      <section
+        style={{
+          width: "100%",
+          zIndex: 3,
+          height: "100%",
+          display: "flex",
+          backgroundSize: "contain",
+          backgroundRepeat: "no-repeat",
+        }}
+      >
+        <img
+          style={{
+            width: "100%",
+            zIndex: 3,
+            height: "100%",
+            display: "flex",
+            backgroundSize: "contain",
+            backgroundRepeat: "no-repeat",
+          }}
+          src={cauchuyen}
+          alt=""
+        />
+      </section>
+
       {/* Newsletter/CTA Section */}
       <section className="about-newsletter-container">
         <div className="about-newsletter">
-          <h2 className="about-newsletter-heading">
+          <h2 className="section-heading">
             <img src={ctaLeaf} alt="Logo Icon" className="about-cta-leaf" />
-            Slogan Inner Embrace
+            Subscribe With Email
           </h2>
           <p className="about-newsletter-text">
-            Whether you're looking for 1-on-1 support, a reflective AI space, or
-            clear guidance on a challenge – Inner Embrace offers a path that
-            meets you where you are.
+            Subscribe Inner Embrace — nhận những thông báo mới nhất
           </p>
-          <button
-            onClick={handleAICoachingClick}
-            className="about-newsletter-btn about-btn about-btn-primary"
-          >
-            Try AI Coaching for Free
-          </button>
+          <div className="newsletter-form">
+            <input
+              type="email"
+              placeholder="Nhập Email Liên Hệ"
+              required
+              className="about-newsletter-btn about-btn "
+            />
+            <button
+              type="submit"
+              className="newsletter-btn about-newsletter-btn about-btn about-btn-primary"
+            >
+              Subscribe
+            </button>
+          </div>
         </div>
       </section>
     </div>

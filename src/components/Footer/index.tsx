@@ -11,9 +11,21 @@ const Footer: React.FC = () => {
       <div className="footer-content">
         <div className="footer-left">
           <img src={footerLogo} alt="Inner Embrace Logo" />
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
         </div>
-
+        <p
+          className="p-content"
+          style={{
+            color: "white",
+            textAlign: "start",
+            maxWidth: 400,
+            fontWeight: 400,
+          }}
+        >
+          Bạn không cần phải biết mình phải làm gì. Chỉ cần sẵn lòng. Sẵn lòng
+          cho phép mình được quay về, được lắng nghe. Những điều đã ở đó rất lâu
+          — chờ bạn nghe thấy. Và có thể, chỉ vậy thôi... cũng đã là một khởi
+          đầu.
+        </p>
         <div className="footer-right">
           <div className="footer-right-text">
             <div className="footer-item">

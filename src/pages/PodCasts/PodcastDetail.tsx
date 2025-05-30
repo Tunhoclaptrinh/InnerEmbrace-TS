@@ -523,23 +523,18 @@ const PodcastDetail: React.FC = () => {
                 <div className="podcast-detail__player-time">
                   {episodes.find((e) => e.id === currentlyPlaying)?.duration}
                 </div>
-                <button
-                  className="podcast-detail__player-stop"
-                  onClick={handlePlayerStop}
-                  title="Stop"
-                >
-                  ⏹
-                </button>
                 <button className="podcast-detail__player-add">+</button>
               </div>
             )}
-
-            {/* Episodes List */}
             {/* Episodes List */}
             <h2 className="podcast-detail__section-title">Episodes</h2>
             <ul className="podcast-detail__episodes">
               {episodes.map((episode, index) => (
-                <li key={episode.id} className="podcast-detail__episode">
+                <li
+                  key={episode.id}
+                  className="podcast-detail__episode"
+                  onClick={() => handlePlayEpisode(episode.id)}
+                >
                   <span className="podcast-detail__episode-number">
                     {episode.number}
                   </span>

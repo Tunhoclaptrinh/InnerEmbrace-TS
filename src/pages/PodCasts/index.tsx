@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import "../../assets/css/PodCasts.css";
 
 import { Link } from "react-router-dom";
@@ -79,35 +79,49 @@ const PodcastsPage: React.FC = () => {
     }
   };
 
-  const handleSearchChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  // Debounced search function
+  const debouncedSearch = useCallback(
+    debounce(async (searchValue: string) => {
+      if (searchValue.trim()) {
+        setSearchLoading(true);
+        try {
+          // Try search from API first
+          const result = await searchPodcasts(searchValue);
+          setFilteredPodcasts(result.data);
+        } catch (err: any) {
+          console.error("Search API error, falling back to local search:", err);
+
+          // Fallback: search local data
+          const filtered = podcasts.filter(
+            (podcast) =>
+              podcast.title.toLowerCase().includes(searchValue.toLowerCase()) ||
+              podcast.authorName
+                .toLowerCase()
+                .includes(searchValue.toLowerCase()) ||
+              (podcast.description &&
+                podcast.description
+                  .toLowerCase()
+                  .includes(searchValue.toLowerCase()))
+          );
+          setFilteredPodcasts(filtered);
+        } finally {
+          setSearchLoading(false);
+        }
+      } else {
+        // Reset to all podcasts when search is cleared
+        setFilteredPodcasts(podcasts);
+        setSearchLoading(false);
+      }
+    }, 500), // 500ms delay
+    [podcasts]
+  );
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setSearchTerm(value);
 
-    if (value.trim()) {
-      setSearchLoading(true);
-      try {
-        // Try search from API first
-        const result = await searchPodcasts(value);
-        setFilteredPodcasts(result.data);
-      } catch (err: any) {
-        console.error("Search API error, falling back to local search:", err);
-
-        // Fallback: search local data
-        const filtered = podcasts.filter(
-          (podcast) =>
-            podcast.title.toLowerCase().includes(value.toLowerCase()) ||
-            podcast.authorName.toLowerCase().includes(value.toLowerCase()) || // Updated field name
-            (podcast.description &&
-              podcast.description.toLowerCase().includes(value.toLowerCase()))
-        );
-        setFilteredPodcasts(filtered);
-      } finally {
-        setSearchLoading(false);
-      }
-    } else {
-      // Reset to all podcasts when search is cleared
-      setFilteredPodcasts(podcasts);
-    }
+    // Call debounced search
+    debouncedSearch(value);
   };
 
   const handleAICoachingClick = () => {
@@ -200,7 +214,6 @@ const PodcastsPage: React.FC = () => {
                   value={searchTerm}
                   onChange={handleSearchChange}
                   className="podcasts-page__search-input"
-                  disabled={searchLoading}
                 />
               </div>
             </div>
@@ -355,5 +368,17 @@ const PodcastsPage: React.FC = () => {
     </div>
   );
 };
+
+// Debounce utility function
+function debounce<T extends (...args: any[]) => any>(
+  func: T,
+  wait: number
+): (...args: Parameters<T>) => void {
+  let timeout: NodeJS.Timeout;
+  return (...args: Parameters<T>) => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func.apply(null, args), wait);
+  };
+}
 
 export default PodcastsPage;

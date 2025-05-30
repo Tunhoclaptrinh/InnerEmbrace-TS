@@ -1089,7 +1089,7 @@
   /* Hero Section */
   .homepage-container .hero {
     margin-top: 60px;
-    min-height: 150px;
+    /* min-height: 150px; */
   }
 
   /* Section Paddings */

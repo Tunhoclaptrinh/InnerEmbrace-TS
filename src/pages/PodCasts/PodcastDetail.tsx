@@ -35,6 +35,7 @@ interface PodcastEpisode {
   duration: string;
   id: string;
   audioUrl?: string; // Add audio URL
+  coverImage?: string;
 }
 
 interface RelatedPodcast {
@@ -146,6 +147,7 @@ const PodcastDetail: React.FC = () => {
             duration: formatDuration(episode.duration),
             id: episode.id,
             audioUrl: episode.audio, // Include audio URL
+            coverImage: episode.coverImage, // Thêm coverImage từ API
           })
         );
         setEpisodes(formattedEpisodes);
@@ -533,6 +535,7 @@ const PodcastDetail: React.FC = () => {
             )}
 
             {/* Episodes List */}
+            {/* Episodes List */}
             <h2 className="podcast-detail__section-title">Episodes</h2>
             <ul className="podcast-detail__episodes">
               {episodes.map((episode, index) => (
@@ -542,6 +545,8 @@ const PodcastDetail: React.FC = () => {
                   </span>
                   <img
                     src={
+                      // Ưu tiên hiển thị ảnh riêng của episode trước
+                      episode.coverImage ||
                       podcast.coverImage ||
                       fallbackImages[index % fallbackImages.length]
                     }

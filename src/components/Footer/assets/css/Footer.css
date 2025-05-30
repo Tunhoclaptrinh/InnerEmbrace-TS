@@ -117,3 +117,174 @@ footer {
     margin-top: 20px;
   }
 }
+
+/* Test responsive */
+
+/* Tablet Styles */
+@media (max-width: 1024px) {
+  .footer-content {
+    margin: 0 60px;
+    gap: 30px;
+  }
+
+  .footer-left img {
+    width: 160px;
+  }
+
+  .p-content {
+    font-size: 1.4rem;
+    margin-top: 30px;
+  }
+
+  .footer-item h3 {
+    font-size: 1.4rem;
+  }
+
+  .footer-right {
+    margin-top: 40px;
+    gap: 20px;
+  }
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+  footer {
+    padding: 30px 4% 15px;
+  }
+
+  .footer-content {
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 0 20px;
+    gap: 30px;
+  }
+
+  .footer-left {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .footer-left img {
+    width: 140px;
+    margin-bottom: 15px;
+  }
+
+  .p-content {
+    font-size: 1.2rem;
+    margin-top: 20px;
+    max-width: 100% !important;
+  }
+
+  .footer-right {
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 20px;
+    gap: 20px;
+  }
+
+  .footer-right-text {
+    gap: 15px;
+  }
+
+  .footer-right-social {
+    gap: 6px;
+  }
+
+  .footer-item h3 {
+    font-size: 1.3rem;
+  }
+
+  .footer-item-social-icon {
+    width: 40px;
+    height: 32px;
+    margin: 4px 0;
+  }
+
+  .footer-bottom {
+    font-size: 1.1rem;
+    padding-top: 30px;
+    margin-bottom: 30px;
+    padding: 30px 20px 0;
+  }
+
+  .footer-content::before {
+    width: 200px;
+    height: 150px;
+  }
+}
+
+/* Small Mobile Styles */
+@media (max-width: 480px) {
+  footer {
+    padding: 25px 3% 10px;
+  }
+
+  .footer-content {
+    margin: 0 10px;
+    gap: 25px;
+  }
+
+  .footer-left img {
+    width: 120px;
+  }
+
+  .p-content {
+    font-size: 1.1rem;
+    line-height: 1.5;
+  }
+
+  .footer-right {
+    flex-direction: column;
+    gap: 25px;
+  }
+
+  .footer-right-text,
+  .footer-right-social {
+    align-items: flex-start;
+  }
+
+  .footer-right-social {
+    flex-direction: row;
+    gap: 15px;
+  }
+
+  .footer-item h3 {
+    font-size: 1.2rem;
+  }
+
+  .footer-item-social-icon {
+    width: 36px;
+    height: 28px;
+  }
+
+  .footer-bottom {
+    font-size: 1rem;
+    padding-top: 25px;
+    margin-bottom: 20px;
+    text-align: left;
+  }
+
+  .footer-content::before {
+    display: none;
+  }
+}
+
+/* Extra Small Mobile */
+@media (max-width: 360px) {
+  .footer-content {
+    margin: 0 5px;
+  }
+
+  .p-content {
+    font-size: 1rem;
+  }
+
+  .footer-item h3 {
+    font-size: 1.1rem;
+  }
+
+  .footer-bottom {
+    font-size: 0.9rem;
+  }
+}

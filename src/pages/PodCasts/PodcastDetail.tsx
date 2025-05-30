@@ -162,29 +162,29 @@ const PodcastDetail: React.FC = () => {
           {
             number: "01",
             date: "March 21, 2025",
-            title: "Handlebars (Feat. Dua Lipa)",
+            title: "Handlebars (Feat. Dua Lipa) (Mock data)",
             duration: "03:14",
             id: "episode-1",
             audioUrl:
-              "https://www.soundjay.com/misc/sounds/bell-ringing-05.wav", // Sample audio
+              "https://www.soundjay.com/misc/sounds/bell-ringing-05.wav",
           },
           {
             number: "02",
             date: "March 22, 2025",
-            title: "Understanding AI Ethics",
+            title: "Understanding AI Ethics  (Mock data)",
             duration: "45:30",
             id: "episode-2",
             audioUrl:
-              "https://www.soundjay.com/misc/sounds/bell-ringing-05.wav", // Sample audio
+              "https://www.soundjay.com/misc/sounds/bell-ringing-05.wav",
           },
           {
             number: "03",
             date: "March 23, 2025",
-            title: "The Future of Machine Learning",
+            title: "The Future of Machine Learning  (Mock data)",
             duration: "32:15",
             id: "episode-3",
             audioUrl:
-              "https://www.soundjay.com/misc/sounds/bell-ringing-05.wav", // Sample audio
+              "https://www.soundjay.com/misc/sounds/bell-ringing-05.wav",
           },
         ]);
       }
@@ -286,7 +286,6 @@ const PodcastDetail: React.FC = () => {
         return;
       }
 
-      // Stop current episode if any
       if (currentlyPlaying) {
         stopEpisode();
       }
@@ -299,7 +298,7 @@ const PodcastDetail: React.FC = () => {
         duration: 0, // Will be set by audio player
         audio:
           episode.audioUrl ||
-          "https://www.soundjay.com/misc/sounds/bell-ringing-05.wav", // Fallback audio
+          "https://www.soundjay.com/misc/sounds/bell-ringing-05.wav",
         position: 0,
       };
 
@@ -351,14 +350,12 @@ const PodcastDetail: React.FC = () => {
     setIsPlayerHidden(true); // Hide player when stopped
   };
 
-  // New handlers for player controls
   const handlePlayerMinimize = () => {
     setIsPlayerMinimized(!isPlayerMinimized);
   };
 
   const handlePlayerClose = () => {
     setIsPlayerHidden(true);
-    // Optionally stop the audio as well
     if (currentlyPlaying) {
       handlePlayerStop();
     }

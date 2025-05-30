@@ -1,11 +1,8 @@
 import React, { useState, useEffect, useCallback } from "react";
 import "../../assets/css/PodCasts.css";
-
 import { Link } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
-
-// Import images
 import ctaLeafIcon from "../../assets/img/cta-leaf.png";
 import pod1Image from "../../assets/img/pod1.png";
 import pod2Image from "../../assets/img/pod2.png";
@@ -20,7 +17,7 @@ import {
   getPodcastsByCategory,
   Podcast,
   PodcastCategory,
-} from "../../services/podcast.service"; // Updated path
+} from "../../services/podcast.service";
 
 const PodcastsPage: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -363,13 +360,10 @@ const PodcastsPage: React.FC = () => {
           </div>
         </section>
       </main>
-
-      {/* Add CSS for loading spinner animation */}
     </div>
   );
 };
 
-// Debounce utility function
 function debounce<T extends (...args: any[]) => any>(
   func: T,
   wait: number

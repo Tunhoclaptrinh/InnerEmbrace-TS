@@ -64,6 +64,10 @@ const PodcastDetail: React.FC = () => {
   const [totalDuration, setTotalDuration] = useState(0);
   const [audioError, setAudioError] = useState<string>("");
 
+  // Player bar states
+  const [isPlayerMinimized, setIsPlayerMinimized] = useState(false);
+  const [isPlayerHidden, setIsPlayerHidden] = useState(false);
+
   const fallbackImages = [pod1Image, pod2Image, pod3Image, pod4Image];
 
   useEffect(() => {
@@ -85,6 +89,7 @@ const PodcastDetail: React.FC = () => {
         setIsAudioPlaying(false);
         setCurrentlyPlaying(null);
         setCurrentTime(0);
+        setIsPlayerHidden(true); // Auto hide when ended
       },
       onTimeUpdate: (current: number, duration: number) => {
         setCurrentTime(current);
@@ -302,6 +307,8 @@ const PodcastDetail: React.FC = () => {
       await playEpisode(episodeToPlay);
       setCurrentlyPlaying(episodeId);
       setAudioError("");
+      setIsPlayerHidden(false); // Show player when playing
+      setIsPlayerMinimized(false); // Expand player when playing new episode
     } catch (error: any) {
       console.error("Error playing episode:", error);
       setAudioError(error.message);
@@ -341,6 +348,25 @@ const PodcastDetail: React.FC = () => {
     setCurrentlyPlaying(null);
     setIsAudioPlaying(false);
     setCurrentTime(0);
+    setIsPlayerHidden(true); // Hide player when stopped
+  };
+
+  // New handlers for player controls
+  const handlePlayerMinimize = () => {
+    setIsPlayerMinimized(!isPlayerMinimized);
+  };
+
+  const handlePlayerClose = () => {
+    setIsPlayerHidden(true);
+    // Optionally stop the audio as well
+    if (currentlyPlaying) {
+      handlePlayerStop();
+    }
+  };
+
+  const handlePlayerExpand = () => {
+    setIsPlayerHidden(false);
+    setIsPlayerMinimized(false);
   };
 
   if (loading) {
@@ -469,8 +495,8 @@ const PodcastDetail: React.FC = () => {
                       {isFollowing ? "Following" : "Follow"}
                     </button>
                     <span className="podcast-detail__listeners">
-                      {Math.floor(Math.random() * 5000) + 1000} monthly
-                      listeners
+                      100+ monthly listeners
+                      {/* {Math.floor(Math.random() * 5000) + 1000} monthly */}
                     </span>
                   </div>
                   <button
@@ -483,56 +509,15 @@ const PodcastDetail: React.FC = () => {
               </div>
             </div>
 
-            {/* Enhanced Player Bar */}
-            {currentlyPlaying && episodes.length > 0 && (
-              <div className="podcast-detail__player">
-                <button
-                  className="podcast-detail__player-btn"
-                  onClick={handlePlayerToggle}
-                >
-                  {isAudioPlaying ? "⏸" : "▶"}
-                </button>
-                <div className="podcast-detail__player-info">
-                  <div className="podcast-detail__player-date">
-                    {episodes.find((e) => e.id === currentlyPlaying)?.date}
-                  </div>
-                  <div className="podcast-detail__player-title">
-                    {episodes.find((e) => e.id === currentlyPlaying)?.title}
-                  </div>
-                  <div
-                    className="podcast-detail__player-progress"
-                    onClick={handleProgressClick}
-                    style={{ cursor: "pointer" }}
-                  >
-                    <div
-                      className="podcast-detail__player-progress-fill"
-                      style={{
-                        width:
-                          totalDuration > 0
-                            ? `${(currentTime / totalDuration) * 100}%`
-                            : "0%",
-                      }}
-                    ></div>
-                  </div>
-                  <div className="podcast-detail__player-time-info">
-                    <span>{formatTime(currentTime)}</span>
-                    <span> / </span>
-                    <span>{formatTime(totalDuration)}</span>
-                  </div>
-                </div>
-                <div className="podcast-detail__player-time">
-                  {episodes.find((e) => e.id === currentlyPlaying)?.duration}
-                </div>
-                <button className="podcast-detail__player-add">+</button>
-              </div>
-            )}
             {/* Episodes List */}
             <h2 className="podcast-detail__section-title">Episodes</h2>
             <ul className="podcast-detail__episodes">
               {episodes.map((episode, index) => (
                 <li
                   key={episode.id}
-                  className="podcast-detail__episode"
+                  className={`podcast-detail__episode ${
+                    currentlyPlaying === episode.id ? "playing" : ""
+                  }`}
                   onClick={() => handlePlayEpisode(episode.id)}
                 >
                   <span className="podcast-detail__episode-number">
@@ -540,7 +525,6 @@ const PodcastDetail: React.FC = () => {
                   </span>
                   <img
                     src={
-                      // Ưu tiên hiển thị ảnh riêng của episode trước
                       episode.coverImage ||
                       podcast.coverImage ||
                       fallbackImages[index % fallbackImages.length]
@@ -554,14 +538,30 @@ const PodcastDetail: React.FC = () => {
                     </div>
                     <div className="podcast-detail__episode-title">
                       {episode.title}
+                      {/* Optional: Audio visualizer for playing episode */}
+                      {currentlyPlaying === episode.id && isAudioPlaying && (
+                        <div className="audio-visualizer">
+                          <div className="bar"></div>
+                          <div className="bar"></div>
+                          <div className="bar"></div>
+                          <div className="bar"></div>
+                        </div>
+                      )}
                     </div>
                   </div>
                   <div className="podcast-detail__episode-duration">
                     {episode.duration}
                   </div>
                   <button
-                    className="podcast-detail__episode-play"
-                    onClick={() => handlePlayEpisode(episode.id)}
+                    className={`podcast-detail__episode-play ${
+                      currentlyPlaying === episode.id && isAudioPlaying
+                        ? "playing"
+                        : ""
+                    }`}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handlePlayEpisode(episode.id);
+                    }}
                   >
                     {currentlyPlaying === episode.id && isAudioPlaying
                       ? "⏸"
@@ -668,6 +668,148 @@ const PodcastDetail: React.FC = () => {
           </button>
         </section>
       </main>
+
+      {/* Enhanced Player Bar with controls */}
+      {currentlyPlaying && episodes.length > 0 && !isPlayerHidden && (
+        <div
+          className={`podcast-detail__player ${
+            isPlayerMinimized ? "minimized" : ""
+          }`}
+        >
+          {/* Player Toggle Button (when hidden) */}
+          {isPlayerHidden && (
+            <button
+              className="podcast-detail__player-toggle"
+              onClick={handlePlayerExpand}
+              title="Show Player"
+            >
+              ▲
+            </button>
+          )}
+
+          {/* Main Player Content */}
+          {!isPlayerMinimized && (
+            <>
+              <img
+                src={
+                  episodes.find((e) => e.id === currentlyPlaying)?.coverImage ||
+                  podcast.coverImage ||
+                  pod4Image
+                }
+                alt="Episode cover"
+                className="podcast-detail__player-cover"
+              />
+
+              <button
+                className="podcast-detail__player-btn"
+                onClick={handlePlayerToggle}
+              >
+                {isAudioPlaying ? "⏸" : "▶"}
+              </button>
+
+              <div className="podcast-detail__player-info">
+                <div className="podcast-detail__player-date">
+                  {episodes.find((e) => e.id === currentlyPlaying)?.date}
+                </div>
+                <div className="podcast-detail__player-title">
+                  {episodes.find((e) => e.id === currentlyPlaying)?.title}
+                </div>
+                <div
+                  className="podcast-detail__player-progress"
+                  onClick={handleProgressClick}
+                  style={{ cursor: "pointer" }}
+                >
+                  <div
+                    className="podcast-detail__player-progress-fill"
+                    style={{
+                      width:
+                        totalDuration > 0
+                          ? `${(currentTime / totalDuration) * 100}%`
+                          : "0%",
+                    }}
+                  ></div>
+                </div>
+                <div className="podcast-detail__player-time-info">
+                  <span>{formatTime(currentTime)}</span>
+                  <span> / </span>
+                  <span>{formatTime(totalDuration)}</span>
+                </div>
+              </div>
+              <button className="podcast-detail__player-add">+</button>
+            </>
+          )}
+
+          {/* Minimized Player Content */}
+          {isPlayerMinimized && (
+            <div className="podcast-detail__player-minimized">
+              <img
+                src={
+                  episodes.find((e) => e.id === currentlyPlaying)?.coverImage ||
+                  podcast.coverImage ||
+                  pod4Image
+                }
+                alt="Episode cover"
+                className="podcast-detail__player-cover-mini"
+              />
+              <button
+                className="podcast-detail__player-btn-mini"
+                onClick={handlePlayerToggle}
+              >
+                {isAudioPlaying ? "⏸" : "▶"}
+              </button>
+              <div className="podcast-detail__player-info-mini">
+                <div className="podcast-detail__player-title-mini">
+                  {episodes.find((e) => e.id === currentlyPlaying)?.title}
+                </div>
+                <div
+                  className="podcast-detail__player-progress-mini"
+                  onClick={handleProgressClick}
+                >
+                  <div
+                    className="podcast-detail__player-progress-fill"
+                    style={{
+                      width:
+                        totalDuration > 0
+                          ? `${(currentTime / totalDuration) * 100}%`
+                          : "0%",
+                    }}
+                  ></div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Player Control Buttons */}
+          <div className="podcast-detail__player-controls">
+            <button
+              className="podcast-detail__player-control-btn"
+              onClick={handlePlayerMinimize}
+              title={isPlayerMinimized ? "Expand Player" : "Minimize Player"}
+            >
+              {isPlayerMinimized ? "▲" : "▼"}
+            </button>
+            <button
+              className="podcast-detail__player-control-btn close"
+              onClick={handlePlayerClose}
+              title="Close Player"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Player Toggle Button (when completely hidden) */}
+      {isPlayerHidden && currentlyPlaying && (
+        <button
+          className="podcast-detail__player-show-btn"
+          onClick={handlePlayerExpand}
+          title="Show Player"
+        >
+          <span>♫</span>
+          <span>Now Playing</span>
+        </button>
+      )}
     </div>
   );
 };

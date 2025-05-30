@@ -19,10 +19,6 @@ const App: React.FC = () => {
   const [networkError, setNetworkError] = useState<string>("");
   const location = useLocation();
 
-  console.log("🔍 DEBUG - Current user:", currentUser);
-  console.log("🔍 DEBUG - Current path:", location.pathname);
-  console.log("🔍 DEBUG - Is loading:", isLoading);
-
   // Scroll to top when route changes
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -32,7 +28,6 @@ const App: React.FC = () => {
     const checkUser = async () => {
       try {
         const user = AuthService.getCurrentUser();
-        console.log("🔍 DEBUG - User from localStorage:", user);
         setCurrentUser(user || undefined);
       } catch (error) {
         console.error("🔍 DEBUG - Auth error:", error);
@@ -87,14 +82,11 @@ const App: React.FC = () => {
 
   // Component bảo vệ route private
   const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
-    console.log("🔍 DEBUG - PrivateRoute check - currentUser:", currentUser);
-
     if (isLoading) {
-      return <div>Loading...</div>; // Hoặc component loading của bạn
+      return <div>Loading...</div>;
     }
 
     if (!currentUser) {
-      console.log("🔍 DEBUG - PrivateRoute - Redirecting to /login");
       return <Navigate to="/login" replace />;
     }
 
@@ -103,8 +95,6 @@ const App: React.FC = () => {
 
   // Component bảo vệ route public (chỉ cho user chưa đăng nhập)
   const PublicRoute = ({ children }: { children: React.ReactNode }) => {
-    console.log("🔍 DEBUG - PublicRoute check - currentUser:", currentUser);
-
     if (isLoading) {
       return <div>Loading...</div>;
     }
@@ -114,7 +104,6 @@ const App: React.FC = () => {
       currentUser &&
       (location.pathname === "/" || location.pathname === "/home")
     ) {
-      console.log("🔍 DEBUG - PublicRoute - Redirecting to /my-home");
       return <Navigate to="/my-home" replace />;
     }
 
@@ -123,10 +112,6 @@ const App: React.FC = () => {
 
   const renderRouteElement = (route: RouteConfig) => {
     const Component = route.element;
-    console.log(
-      `🔍 DEBUG - Rendering route: ${route.path}, layout: ${route.layout}, requiresAuth: ${route.requiresAuth}`
-    );
-
     // Xử lý homepage logic
     if (route.isHomePage) {
       return (
@@ -151,7 +136,7 @@ const App: React.FC = () => {
 
   // Hiển thị loading khi đang check auth
   if (isLoading) {
-    return <div>Loading...</div>; // Thay bằng component loading đẹp hơn
+    return <div>Loading...</div>;
   }
 
   return (

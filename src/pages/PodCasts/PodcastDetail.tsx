@@ -386,7 +386,7 @@ const PodcastDetail: React.FC = () => {
           <h3>Error Loading Podcast</h3>
           <p>{error}</p>
           <button
-            onClick={() => navigate("/podcast")}
+            onClick={() => navigate("/podcasts")}
             style={{
               padding: "10px 20px",
               backgroundColor: "#3498db",

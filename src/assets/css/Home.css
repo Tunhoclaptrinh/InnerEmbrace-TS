@@ -21,7 +21,7 @@
   /* padding: 30px 5%; */
   position: relative;
   overflow: hidden;
-  min-height: 300px;
+  /* min-height: 300px; */
   align-items: center;
   margin-top: 76px;
 }
@@ -849,8 +849,205 @@
   box-shadow: 0 6px 20px rgba(139, 90, 60, 0.3);
 }
 
-/* Responsive */
+/* Override Link styles */
+.podcast-card {
+  text-decoration: none;
+  color: inherit;
+}
+
+.podcast-content {
+  color: inherit;
+}
+
+.podcast-content span {
+  color: inherit;
+}
+
+/* Tương tự cho blog cards */
+.blog-card {
+  text-decoration: none;
+  color: inherit;
+}
+
+.blog-content {
+  color: inherit;
+}
+
+/* ========== RESPONSIVE STYLES ========== */
+
+/* Tablet Portrait và Mobile Landscape (768px và nhỏ hơn) */
 @media (max-width: 768px) {
+  /* Hero Section */
+  .homepage-container .hero {
+    /* min-height: 200px; */
+    /* padding: 20px 3%; */
+  }
+
+  .homepage-container .hero-content-container {
+    background-size: cover;
+  }
+
+  /* Inner Companion & Inner Essentials */
+  .inner-companion,
+  .inner-essentials {
+    flex-direction: column;
+    padding: 30px 20px;
+    min-height: auto;
+    text-align: center;
+  }
+
+  .inner-companion__left,
+  .inner-essentials__left {
+    align-items: center;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .companion-content,
+  .essentials-content {
+    max-width: 100%;
+    padding: 0 30px;
+    text-align: center;
+  }
+
+  .companion-content p,
+  .essentials-content p {
+    font-size: 1.4rem;
+  }
+
+  .companion-image,
+  .essentials-image {
+    max-width: 300px;
+  }
+
+  /* Section Headings */
+  .inner-companion h2,
+  .inner-essentials h2,
+  .pausefullness h2,
+  .inner-whispers h2,
+  .newsletter h2 {
+    font-size: 2.4rem;
+  }
+
+  /* AI Connection */
+  .homepage-container .ai-connection {
+    height: auto;
+    padding: 40px 5%;
+    background-size: contain;
+  }
+
+  .homepage-container .ai-connection-content__titile {
+    font-size: 36px;
+  }
+
+  .homepage-container .ai-connection-content__sub-titile {
+    font-size: 36px;
+  }
+
+  .homepage-container .ai-connection-content__text {
+    font-size: 1.4rem;
+  }
+
+  .homepage-container .ai-connection-btn {
+    font-size: 1.4rem;
+    padding: 18px 24px;
+  }
+
+  /* Story Section */
+  .homepage-container .story {
+    padding: 50px 20px;
+  }
+
+  .homepage-container .story::before,
+  .homepage-container .story::after {
+    display: none; /* Ẩn decorative elements trên mobile */
+  }
+
+  .homepage-container .story h2 {
+    flex-direction: column;
+    margin-bottom: 40px;
+  }
+
+  .homepage-container .logo-story-text {
+    font-size: 3.2rem;
+    margin-bottom: 10px;
+    margin-right: 0;
+  }
+
+  .homepage-container .story p {
+    font-size: 1.4rem;
+    line-height: 24px;
+  }
+
+  /* CTA Section */
+  .homepage-container .cta {
+    width: 90%;
+    max-width: 500px;
+    padding: 30px 20px;
+  }
+
+  .homepage-container .cta-bg {
+    width: 100%;
+  }
+
+  /* Podcasts Section */
+  .homepage-container .podcasts {
+    padding: 40px 20px;
+  }
+
+  .homepage-container .podcast-cards {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .homepage-container .podcast-card {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .homepage-container .podcast-image {
+    height: 180px;
+  }
+
+  .homepage-container .podcast-content h3 {
+    font-size: 1.1rem;
+  }
+
+  /* Blogs Section */
+  .homepage-container .blogs {
+    padding: 40px 20px;
+  }
+
+  .homepage-container .blog-cards {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .homepage-container .blog-card {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .homepage-container .blog-image {
+    height: 220px;
+  }
+
+  .homepage-container .blog-quote {
+    font-size: 0.8rem;
+    padding: 12px;
+  }
+
+  .homepage-container .blog-content h3 {
+    font-size: 1.2rem;
+  }
+
+  /* Newsletter */
+  .homepage-container .newsletter-container {
+    padding: 60px 0;
+  }
+
   .homepage-container .newsletter h2 {
     font-size: 2.2rem;
     padding: 12px 30px;
@@ -874,9 +1071,123 @@
     border-radius: 0 0 12px 12px;
     padding: 16px;
   }
+
+  /* Buttons */
+  .homepage-container .btn {
+    font-size: 1.4rem;
+    padding: 12px 24px;
+  }
+
+  .homepage-container .view-all-btn {
+    padding: 10px 25px;
+    font-size: 1rem;
+  }
 }
 
+/* Mobile Portrait (480px và nhỏ hơn) */
 @media (max-width: 480px) {
+  /* Hero Section */
+  .homepage-container .hero {
+    margin-top: 60px;
+    min-height: 150px;
+  }
+
+  /* Section Paddings */
+  .inner-companion,
+  .inner-essentials,
+  .homepage-container .podcasts,
+  .homepage-container .blogs {
+    padding: 25px 15px;
+  }
+
+  .homepage-container .story {
+    padding: 40px 15px;
+  }
+  .story__paragraph {
+    padding: 0 30px;
+  }
+
+  /* Typography */
+  .inner-companion h2,
+  .inner-essentials h2,
+  .homepage-container .podcasts h2,
+  .homepage-container .blogs h2 {
+    font-size: 2rem;
+  }
+
+  .homepage-container .logo-story-text {
+    font-size: 2.8rem;
+  }
+
+  .companion-content p,
+  .essentials-content p {
+    font-size: 1.2rem;
+  }
+
+  .homepage-container .story p {
+    font-size: 1.2rem;
+    line-height: 22px;
+  }
+
+  /* AI Connection */
+  .homepage-container .ai-connection {
+    padding: 30px 3%;
+  }
+
+  .homepage-container .ai-connection-content__titile,
+  .homepage-container .ai-connection-content__sub-titile {
+    font-size: 28px;
+  }
+
+  .homepage-container .ai-connection-content__text {
+    font-size: 1.2rem;
+  }
+
+  .homepage-container .ai-connection-btn {
+    font-size: 1.2rem;
+    padding: 16px 20px;
+  }
+
+  /* Images */
+  .companion-image,
+  .essentials-image {
+    max-width: 250px;
+  }
+
+  /* Cards */
+  .homepage-container .podcast-image {
+    height: 160px;
+  }
+
+  .homepage-container .podcast-content {
+    padding: 15px;
+  }
+
+  .homepage-container .podcast-content h3 {
+    font-size: 1rem;
+  }
+
+  .homepage-container .podcast-content p {
+    font-size: 0.9rem;
+  }
+
+  .homepage-container .blog-image {
+    height: 180px;
+  }
+
+  .homepage-container .blog-content {
+    padding: 20px 15px;
+  }
+
+  .homepage-container .blog-content h3 {
+    font-size: 1.1rem;
+  }
+
+  .homepage-container .blog-content p {
+    font-size: 0.9rem;
+  }
+
+  /* Newsletter */
   .homepage-container .newsletter {
     padding: 0 15px;
   }
@@ -885,28 +1196,157 @@
     font-size: 1.8rem;
     padding: 10px 25px;
   }
+
+  .homepage-container .newsletter p {
+    font-size: 0.9rem;
+  }
+
+  .homepage-container .newsletter-form input {
+    padding: 16px 20px;
+    font-size: 0.9rem;
+  }
+
+  .homepage-container .newsletter-btn {
+    padding: 16px 25px;
+    font-size: 0.9rem;
+  }
+
+  /* CTA */
+  .homepage-container .cta {
+    width: 95%;
+    padding: 25px 15px;
+  }
+
+  .homepage-container .cta p {
+    font-size: 1.4rem;
+  }
+
+  /* Buttons */
+  .homepage-container .btn {
+    font-size: 1.2rem;
+    padding: 10px 20px;
+  }
+
+  .homepage-container .view-all-btn {
+    padding: 8px 20px;
+    font-size: 0.9rem;
+  }
 }
 
-/* Override Link styles */
-.podcast-card {
-  text-decoration: none;
-  color: inherit; /* Hoặc màu cụ thể mà bạn muốn */
+/* Large Mobile (between 480px and 600px) */
+@media (min-width: 481px) and (max-width: 600px) {
+  .homepage-container .podcast-cards,
+  .homepage-container .blog-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .homepage-container .podcast-card:nth-child(3),
+  .homepage-container .blog-card:nth-child(3) {
+    grid-column: 1 / -1;
+    max-width: 350px;
+    margin: 0 auto;
+  }
 }
 
-.podcast-content {
-  color: inherit; /* Hoặc màu cụ thể mà bạn muốn */
+/* Tablet Landscape (769px to 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .homepage-container .podcast-cards,
+  .homepage-container .blog-cards {
+    gap: 20px;
+  }
+
+  .homepage-container .podcast-card,
+  .homepage-container .blog-card {
+    max-width: 300px;
+  }
+
+  .inner-companion,
+  .inner-essentials {
+    padding: 35px;
+  }
+
+  .homepage-container .story {
+    padding: 60px 40px;
+  }
+
+  .homepage-container .podcasts,
+  .homepage-container .blogs {
+    padding: 50px 30px;
+  }
+  .story__paragraph {
+    padding: 0 30px;
+  }
 }
 
-.podcast-content span {
-  color: inherit; /* Hoặc màu cụ thể mà bạn muốn */
+/* Small Desktop (1025px to 1200px) */
+@media (min-width: 1025px) and (max-width: 1200px) {
+  .homepage-container .cta {
+    width: 90%;
+    max-width: 1000px;
+  }
+
+  .homepage-container .podcast-cards,
+  .homepage-container .blog-cards {
+    max-width: 1000px;
+  }
+  .story__paragraph {
+    padding: 0 30px;
+  }
 }
 
-/* Tương tự cho blog cards */
-.blog-card {
-  text-decoration: none;
-  color: inherit;
+/* Ultra-wide screens (1400px and above) */
+@media (min-width: 1400px) {
+  .homepage-container .podcast-cards,
+  .homepage-container .blog-cards {
+    max-width: 1400px;
+  }
+
+  .homepage-container .podcast-card,
+  .homepage-container .blog-card {
+    max-width: 400px;
+  }
+
+  .story__paragraph {
+    padding: 0 30px;
+  }
 }
 
-.blog-content {
-  color: inherit;
+/* Landscape orientation for mobile devices */
+@media (max-height: 500px) and (orientation: landscape) {
+  .homepage-container .hero {
+    min-height: 120px;
+  }
+
+  .inner-companion,
+  .inner-essentials {
+    flex-direction: row;
+    padding: 20px;
+  }
+
+  .inner-companion__left,
+  .inner-essentials__left {
+    text-align: left;
+  }
+
+  .companion-content,
+  .essentials-content {
+    text-align: left;
+  }
+
+  .story__paragraph {
+    padding: 0 30px;
+  }
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .homepage-container .hero-content-container,
+  .homepage-container .ai-connection {
+    background-size: contain;
+  }
+  .story__paragraph {
+    padding: 0 30px;
+  }
 }

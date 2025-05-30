@@ -53,7 +53,7 @@ export interface PodcastCategory {
 // API endpoints
 const ENDPOINTS = {
   PODCAST: "/rest/v1/podcast",
-  CATEGORY: "/rest/v1/categories",
+  // CATEGORY: "/rest/v1/categories",
   PLAYLIST: "/rest/v1/playlist",
   EPISODE: "/rest/v1/episode",
   SUBSCRIPTION: "/rest/v1/subscriptions",
@@ -67,7 +67,7 @@ export const getAllCategories = async (): Promise<{
   try {
     // Try different possible endpoints for categories
     const possibleEndpoints = [
-      "/rest/v1/categories",
+      // "/rest/v1/categories",
       "/rest/v1/category",
       "/rest/v1/podcast_categories",
       "/rest/v1/podcast_category",
